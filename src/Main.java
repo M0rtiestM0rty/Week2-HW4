@@ -1,15 +1,53 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import java.util.Arrays;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
-    }
-}
+public class Main
+{
+    public static void mergeSort(String[] arr, int left, int right)
+    {
+        if (left < right)
+        {
+            int mid = left + (right - left) / 2;
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
+        }// end if
+    }// end mergeSort
+
+    public static void merge(String[] arr, int left, int mid, int right)
+    {
+        String[] leftArray = Arrays.copyOfRange(arr, left, mid + 1);
+        String[] rightArray = Arrays.copyOfRange(arr, mid + 1, right + 1);
+
+        int i = 0, j = 0, k = left;
+        while (i < leftArray.length && j < rightArray.length)
+        {
+            if (leftArray[i].compareToIgnoreCase(rightArray[j]) <= 0)
+            {
+                arr[k++] = leftArray[i++];
+            }// end if statement
+            else
+            {
+                arr[k++] = rightArray[j++];
+            }// end else statement
+        }// end while loop
+        while (i < leftArray.length) arr[k++] = leftArray[i++];
+        while (j < rightArray.length) arr[k++] = rightArray[j++];
+    }// end merge method
+
+    public static void main(String[] args)
+    {
+        String[] books =
+                {
+                "The Great Gatsby",
+                "To Kill a Mockingbird",
+                "1984",
+                "Moby Dick",
+                "Pride and Prejudice"
+                };
+        System.out.println("Before Sorting: " + Arrays.toString(books));
+
+        mergeSort(books, 0, books.length - 1);
+
+        System.out.println("After Sorting: " + Arrays.toString(books));
+    }// end maiin
+}// end class
